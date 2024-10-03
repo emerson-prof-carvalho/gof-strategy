@@ -1,14 +1,23 @@
 package model;
 
-public class ISS implements Tax{
-	private ISSAliquot aliquot; 
+public class ISS extends Tax {
+
+	private String municipality;
 	
-	public ISS(ISSAliquot aliquot) {
-		this.aliquot = aliquot;
+	public ISS(String municipality) {
+		this.municipality = municipality;
 	}
 	
 	@Override
-	public double calculateTax(double value) {
-		return aliquot.getAliquot() * value;
+	public Double calculate(Item item) {
+		
+		Double iss = DataBaseMock.selectISS(municipality);
+		
+		return item.getValue() * iss;
+	}
+
+	@Override
+	public String getName() {
+		return "ISS";
 	}
 }

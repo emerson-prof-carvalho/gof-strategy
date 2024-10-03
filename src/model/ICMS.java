@@ -1,14 +1,25 @@
 package model;
 
-public final class ICMS implements Tax{
-	private ICMSAliquot aliquot;
+public class ICMS extends Tax {
+
+	private String UFFrom;
+	private String UFTo;
 	
-	public ICMS(ICMSAliquot aliquot) {
-		this.aliquot = aliquot;
+	public ICMS(String from, String to) {
+		this.UFFrom = from;
+		this.UFTo = to;
 	}
 	
 	@Override
-	public double calculateTax(double value) {
-		return aliquot.getAliquot() * value;
+	public Double calculate(Item item) {
+		
+		Double icms = DataBaseMock.selectICMS(UFFrom+UFTo);
+		
+		return item.getValue() * icms;
+	}
+
+	@Override
+	public String getName() {
+		return "ICMS";
 	}
 }
